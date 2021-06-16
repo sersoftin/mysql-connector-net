@@ -67,21 +67,12 @@ namespace MySql.Data.MySqlClient
     public virtual MySqlSchemaCollection GetDatabases(string[] restrictions)
     {
       Regex regex = null;
-      int caseSetting = Int32.Parse(connection.driver.Property("lower_case_table_names"), CultureInfo.InvariantCulture);
 
       string sql = "SHOW DATABASES";
 
-      // if lower_case_table_names is zero, then case lookup should be sensitive
-      // so we can use LIKE to do the matching.
-      if (caseSetting == 0)
-      {
-        if (restrictions != null && restrictions.Length >= 1)
-          sql = sql + " LIKE '" + restrictions[0] + "'";
-      }
-
       MySqlSchemaCollection c = QueryCollection("Databases", sql);
 
-      if (caseSetting != 0 && restrictions != null && restrictions.Length >= 1 && restrictions[0] != null)
+      if (restrictions != null && restrictions.Length >= 1 && restrictions[0] != null)
         regex = new Regex(restrictions[0], RegexOptions.IgnoreCase);
 
       MySqlSchemaCollection c2 = new MySqlSchemaCollection("Databases");

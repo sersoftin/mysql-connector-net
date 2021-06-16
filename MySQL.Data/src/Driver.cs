@@ -280,7 +280,7 @@ namespace MySql.Data.MySqlClient
       // load server properties
       Dictionary<string, string> hash = new Dictionary<string, string>();
       MySqlCommand cmd = new MySqlCommand(@"SELECT @@max_allowed_packet, @@character_set_client, 
-        @@character_set_connection, @@license, @@sql_mode, @@lower_case_table_names;", connection);
+        @@character_set_connection, @@license, @@sql_mode;", connection);
       try
       {
         using (MySqlDataReader reader = cmd.ExecuteReader())
